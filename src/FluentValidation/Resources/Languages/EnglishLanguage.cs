@@ -1,4 +1,5 @@
 #region License
+<<<<<<< HEAD
 
 // Copyright (c) .NET Foundation and contributors.
 //
@@ -16,6 +17,23 @@
 //
 // The latest version of this file can be found at https://github.com/FluentValidation/FluentValidation
 
+=======
+// Copyright (c) Jeremy Skinner (http://www.jeremyskinner.co.uk)
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); 
+// you may not use this file except in compliance with the License. 
+// You may obtain a copy of the License at 
+// 
+// http://www.apache.org/licenses/LICENSE-2.0 
+// 
+// Unless required by applicable law or agreed to in writing, software 
+// distributed under the License is distributed on an "AS IS" BASIS, 
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+// See the License for the specific language governing permissions and 
+// limitations under the License.
+// 
+// The latest version of this file can be found at https://github.com/JeremySkinner/FluentValidation
+>>>>>>> parent of 5eb9084f (Merge pull request #589 from totpero/master)
 #endregion
 
 #pragma warning disable 618
@@ -27,6 +45,7 @@ internal class EnglishLanguage {
 	public const string AmericanCulture = "en-US";
 	public const string BritishCulture = "en-GB";
 
+<<<<<<< HEAD
 	public static string GetTranslation(string key) => key switch {
 		"EmailValidator" => "'{PropertyName}' is not a valid email address.",
 		"GreaterThanOrEqualValidator" => "'{PropertyName}' must be greater than or equal to '{ComparisonValue}'.",
@@ -60,3 +79,9 @@ internal class EnglishLanguage {
 		_ => null,
 	};
 }
+=======
+			
+		}
+	}
+}
+>>>>>>> parent of 5eb9084f (Merge pull request #589 from totpero/master)

@@ -1,4 +1,5 @@
 ﻿#region License
+<<<<<<< HEAD
 
 // Copyright (c) .NET Foundation and contributors.
 //
@@ -32,6 +33,36 @@ public class LanguageManager : ILanguageManager {
 
 	/// <summary>
 	/// Language factory.
+=======
+// Copyright (c) Jeremy Skinner (http://www.jeremyskinner.co.uk)
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); 
+// you may not use this file except in compliance with the License. 
+// You may obtain a copy of the License at 
+// 
+// http://www.apache.org/licenses/LICENSE-2.0 
+// 
+// Unless required by applicable law or agreed to in writing, software 
+// distributed under the License is distributed on an "AS IS" BASIS, 
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+// See the License for the specific language governing permissions and 
+// limitations under the License.
+// 
+// The latest version of this file can be found at https://github.com/JeremySkinner/FluentValidation
+#endregion
+namespace FluentValidation.Resources {
+	using System;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Globalization;
+	using System.Linq;
+	using System.Reflection;
+	using Internal;
+	using Validators;
+
+	/// <summary>
+	/// Allows the default error message translations to be managed. 
+>>>>>>> parent of 5eb9084f (Merge pull request #589 from totpero/master)
 	/// </summary>
 	/// <param name="culture">The culture code.</param>
 	/// <param name="key">The key to load</param>
@@ -96,10 +127,38 @@ public class LanguageManager : ILanguageManager {
 		};
 	}
 
+<<<<<<< HEAD
 	/// <summary>
 	/// Whether localization is enabled.
 	/// </summary>
 	public bool Enabled { get; set; } = true;
+=======
+		/// <summary>
+		/// Creates a new instance of the LanguageManager class.
+		/// </summary>
+		public LanguageManager() {
+			var languages = new Language[] {
+				new EnglishLanguage(), 
+				new ChineseSimplifiedLanguage(),
+				new CzechLanguage(), 
+				new DanishLanguage(),
+				new DutchLanguage(), 
+				new FinnishLanguage(), 
+				new FrenchLanguage(), 
+				new GermanLanguage(), 
+				new ItalianLanguage(), 
+				new KoreanLanguage(), 
+				new MacedonianLanguage(), 
+				new PersianLanguage(), 
+				new PolishLanguage(), 
+				new PortugueseLanguage(), 
+				new RussianLanguage(), 
+				new SpanishLanguage(), 
+				new SwedishLanguage(), 
+				new TurkishLanguage(), 
+				new HindiLanguage()
+			};
+>>>>>>> parent of 5eb9084f (Merge pull request #589 from totpero/master)
 
 	/// <summary>
 	/// Default culture to use for all requests to the LanguageManager. If not specified, uses the current UI culture.
@@ -113,6 +172,7 @@ public class LanguageManager : ILanguageManager {
 		_languages.Clear();
 	}
 
+<<<<<<< HEAD
 	/// <summary>
 	/// Gets a translated string based on its key. If the culture is specific and it isn't registered, we try the neutral culture instead.
 	/// If no matching culture is found  to be registered we use English.
@@ -122,6 +182,52 @@ public class LanguageManager : ILanguageManager {
 	/// <returns></returns>
 	public virtual string GetString(string key, CultureInfo culture = null) {
 		string value;
+=======
+		/// <summary>
+		/// Whether localization is enabled.
+		/// </summary>
+		public bool Enabled { get; set; } = true;
+
+		/// <summary>
+		/// Default culture to use for all requests to the LanguageManager. If not specified, uses the current UI culture. 
+		/// </summary>
+		public CultureInfo Culture { get; set; }
+
+		/// <summary>
+		/// Provides a collection of all supported languages.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<string> GetSupportedLanguages() {
+			return _languages.Keys;
+		}
+
+
+		/// <summary>
+		/// Removes all languages except the default. 
+		/// </summary>
+		public void Clear() {
+			_languages.Clear();
+		}
+
+		/// <summary>
+		/// Gets a translated string based on its key. If the culture is specific and it isn't registered, we try the neutral culture instead.
+		/// If no matching culture is found  to be registered we use English.
+		/// </summary>
+		/// <param name="key">The key</param>
+		/// <param name="culture">The culture to translate into</param>
+		/// <returns></returns>
+		public virtual string GetString(string key, CultureInfo culture=null) {
+			// For backwards compatibility with < 7.0 ResourceProvider
+#pragma warning disable 618
+			if (ValidatorOptions.ResourceProviderType != null) {
+				try {
+					var localizedStringSource = new LocalizedStringSource(ValidatorOptions.ResourceProviderType, BackwardsCompatibilityCodeMapping(key));
+					return localizedStringSource.GetString(null);
+				}
+				catch(InvalidOperationException) {  } // If something went wrong with the backwards compat override, just allow it to carry on to the normal behaviour.
+			}
+#pragma warning restore 618
+>>>>>>> parent of 5eb9084f (Merge pull request #589 from totpero/master)
 
 		if (Enabled) {
 			culture = culture ?? Culture ?? CultureInfo.CurrentUICulture;
@@ -137,11 +243,22 @@ public class LanguageManager : ILanguageManager {
 				value = _languages.GetOrAdd(parentCultureKey, k => GetTranslation(currentCulture.Name, key));
 			}
 
+<<<<<<< HEAD
 			if (value == null && culture.Name != EnglishLanguage.Culture) {
 				// If it couldn't be found, try the fallback English (if we haven't tried it already).
 				if (!culture.IsNeutralCulture && culture.Parent.Name != EnglishLanguage.Culture) {
 					value = _languages.GetOrAdd(EnglishLanguage.Culture + ":" + key, k => EnglishLanguage.GetTranslation(key));
 				}
+=======
+			var languageToUse = Enabled && _languages.ContainsKey(code) 
+				? _languages[code] 
+				: _fallback;
+
+			string value = languageToUse.GetTranslation(key);
+
+			if (string.IsNullOrEmpty(value) && languageToUse != _fallback) {
+				value = _fallback.GetTranslation(key);
+>>>>>>> parent of 5eb9084f (Merge pull request #589 from totpero/master)
 			}
 		}
 		else {
